@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Lab5
 {
@@ -60,10 +62,23 @@ namespace Lab5
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            UsersListBox.Items.Add(new User(NameTextBox.Text, EmailTextBox.Text));
-            UsersListBox.DisplayMemberPath = "Name";
-            AdminsListBox.DisplayMemberPath = "Name";
+            var nameRaw = NameTextBox.Text.ToLower().Trim();
+            var email = EmailTextBox.Text.ToLower().Trim();
+
+
+            TextInfo nameTitle = new CultureInfo("sv-SE", false).TextInfo;
+
+            var name = nameTitle.ToTitleCase(nameRaw);
+
+            if (ValidUserInput(name, email))
+            {
+                UsersListBox.Items.Add(new User(name, email));
+                UsersListBox.DisplayMemberPath = "Name";
+                AdminsListBox.DisplayMemberPath = "Name";
+            }
         }
+
+        
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -162,7 +177,59 @@ namespace Lab5
             if (NameTextBox.Text == "Name")
             {
                 NameTextBox.Text = "";
+            }
+        }
 
+        private void NameTextBox_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            if (NameTextBox.Text == "Name")
+            {
+                NameTextBox.Text = "";
+            }
+            NameTextBox.SelectAll();
+        }
+
+        private void EmailTextBox_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            if (EmailTextBox.Text == "Email")
+            {
+                EmailTextBox.Text = "";
+            }
+            EmailTextBox.SelectAll();
+        }
+
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
+            UsersListBox.Items.Add(new User("Otto", "otto.r@protonmail.ch"));
+            UsersListBox.Items.Add(new User("Dave", "DaveDavidson@Dmail.com"));
+            UsersListBox.Items.Add(new User("John", "John@Doe.ca"));
+            UsersListBox.Items.Add(new User("Jeanne", "J@mail.fr"));
+            UsersListBox.Items.Add(new User("Vyacheslav", "V.M.Molotov@PeopleCommissariatforForeignAffairs.su"));
+            UsersListBox.Items.Add(new User("Joe", "J.Sixpack@USA.us"));
+            UsersListBox.DisplayMemberPath = "Name";
+            AdminsListBox.DisplayMemberPath = "Name";
+        }
+        private bool ValidUserInput(string name, string email)
+        {
+            Match matchName = Regex.Match(name, @"^[a-zA-ZåäöÅÄÖ]*$");
+            if (matchName.Success && name != "Name" && !string.IsNullOrWhiteSpace(name))
+            {
+                Match matchEmail = Regex.Match(email, ".@.");
+                if (matchEmail.Success && !string.IsNullOrWhiteSpace(email) && email != "email")
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid email address.");
+                    return false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid name.");
+
+                return false;
             }
         }
     }

@@ -12,8 +12,8 @@
                FontSize="26"
                HorizontalAlignment="Left" 
                VerticalAlignment="Top" Margin="10,0,0,0"/>
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="160" GotFocus="NameTextBox_GotFocus"/>
-        <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Height="23" Margin="10,73,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="160" GotFocus="EmailTextBox_GotFocus"/>
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="160" GotMouseCapture="NameTextBox_GotMouseCapture" GotFocus="NameTextBox_GotFocus"/>
+        <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Height="23" Margin="10,73,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="160" GotMouseCapture="EmailTextBox_GotMouseCapture" GotFocus="EmailTextBox_GotFocus"/>
 
         <Button x:Name="AddButton" Click="AddButton_Click" Content="Add" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top" Width="50"/>
         <Button x:Name="EditButton" Click="EditButton_Click" Content="Edit" IsEnabled="False" HorizontalAlignment="Left" Margin="65,101,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="3.085,0.4" />
@@ -30,6 +30,7 @@
         <Button Content="Make Admin" IsEnabled="False" x:Name="MakeAdminButton" Click="MakeAdminButton_Click"  HorizontalAlignment="Left" Margin="210,151,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Content="Make User" IsEnabled="False" x:Name="MakeUserButton" Click="MakeUserButton_Click" HorizontalAlignment="Left" Margin="315,151,0,0" VerticalAlignment="Top" Width="75"/>
         <Label Content="{Binding Path=Counter}" HorizontalAlignment="Left" Margin="184,267,0,0" VerticalAlignment="Top"/>
+        <Button Content="Test" ToolTip="Adds test subjects to user list" HorizontalAlignment="Left" Margin="379,290,0,0" VerticalAlignment="Top" Width="38" Height="19" Click="TestButton_Click"/>
 
     </Grid>
 </Window>
