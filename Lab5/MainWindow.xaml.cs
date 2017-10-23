@@ -78,7 +78,7 @@ namespace Lab5
             }
         }
 
-        
+
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -113,6 +113,10 @@ namespace Lab5
             MakeAdminButton.IsEnabled = true;
             EditButton.IsEnabled = true;
 
+            var position = UsersListBox.SelectedIndex;
+            AdminsListBox.SelectedIndex = -1;
+            UsersListBox.SelectedIndex = position;
+
             selectedUser = (User)UsersListBox.SelectedItem;
             if (selectedUser != null)
             {
@@ -131,6 +135,10 @@ namespace Lab5
             RemoveButton.IsEnabled = true;
             MakeUserButton.IsEnabled = true;
             EditButton.IsEnabled = true;
+
+            var position = AdminsListBox.SelectedIndex;
+            UsersListBox.SelectedIndex = -1;
+            AdminsListBox.SelectedIndex = position;
 
             selectedUser = (User)AdminsListBox.SelectedItem;
             if (selectedUser != null)
