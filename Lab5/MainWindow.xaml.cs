@@ -12,24 +12,50 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Lab5
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : INotifyPropertyChanged
     {
         public MainWindow()
         {
             DataContext = this;
             InitializeComponent();
         }
-        private int _test;
-        public int Test
+
+        private String _userName = "None";
+        public String UserName
         {
-            get { return _test; }
-            set { _test = value; }
+            get { return _userName; }
+            set
+            {
+                _userName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private String _userEmail = "None";
+        public String UserEmail
+        {
+            get { return _userEmail; }
+            set
+            {
+                _userEmail = value;
+                OnPropertyChanged();
+            }
+        }
+
+        User selectedUser;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -72,9 +98,17 @@ namespace Lab5
             MakeAdminButton.IsEnabled = true;
             EditButton.IsEnabled = true;
 
-            //NameLable.dis = "Name";
-            //AdminsListBox.DisplayMemberPath = "Name";
-            //NameLable.Content = UsersListBox.SelectedItem;
+            selectedUser = (User)UsersListBox.SelectedItem;
+            if (selectedUser != null)
+            {
+                UserName = selectedUser.Name;
+                UserEmail = selectedUser.Email;
+            }
+            else
+            {
+                UserName = "None";
+                UserEmail = "None";
+            }
         }
 
         private void AdminsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,6 +116,18 @@ namespace Lab5
             RemoveButton.IsEnabled = true;
             MakeUserButton.IsEnabled = true;
             EditButton.IsEnabled = true;
+
+            selectedUser = (User)AdminsListBox.SelectedItem;
+            if (selectedUser != null)
+            {
+                UserName = selectedUser.Name;
+                UserEmail = selectedUser.Email;
+            }
+            else
+            {
+                UserName = "None";
+                UserEmail = "None";
+            }
         }
 
         private void MakeAdminButton_Click(object sender, RoutedEventArgs e)
@@ -102,10 +148,22 @@ namespace Lab5
             EditButton.IsEnabled = false;
         }
 
-        private void EmailTextBox_SelectionChanged_1(object sender, RoutedEventArgs e)
+        private void EmailTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            EmailTextBox.Text = "";
+            if (EmailTextBox.Text == "Email")
+            {
+                EmailTextBox.Text = "";
 
+            }
+        }
+
+        private void NameTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (NameTextBox.Text == "Name")
+            {
+                NameTextBox.Text = "";
+
+            }
         }
     }
 }

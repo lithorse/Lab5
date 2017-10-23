@@ -12,8 +12,8 @@
                FontSize="26"
                HorizontalAlignment="Left" 
                VerticalAlignment="Top" Margin="10,0,0,0"/>
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="160"/>
-        <TextBox x:Name="EmailTextBox" SelectionChanged="EmailTextBox_SelectionChanged_1" HorizontalAlignment="Left" Height="23" Margin="10,73,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="160"/>
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="160" GotFocus="NameTextBox_GotFocus"/>
+        <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Height="23" Margin="10,73,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="160" GotFocus="EmailTextBox_GotFocus"/>
 
         <Button x:Name="AddButton" Click="AddButton_Click" Content="Add" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top" Width="50"/>
         <Button x:Name="EditButton" Click="EditButton_Click" Content="Edit" IsEnabled="False" HorizontalAlignment="Left" Margin="65,101,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="3.085,0.4" />
@@ -24,11 +24,12 @@
         <Label Content="Admins" HorizontalAlignment="Left" Margin="315,19,0,0" VerticalAlignment="Top"/>
         <Label Content="Selected user" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top"/>
         <Label Content="Name:" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Path=Test}" Name="NameLable" HorizontalAlignment="Left" Margin="48,151,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Path=UserName}" Name="NameLable" HorizontalAlignment="Left" Margin="48,151,0,0" VerticalAlignment="Top"/>
         <Label Content="Email:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>
-        <Label Content="none" Name="EmailLabel" HorizontalAlignment="Left" Margin="48,177,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Path=UserEmail}" Name="EmailLabel" HorizontalAlignment="Left" Margin="48,177,0,0" VerticalAlignment="Top"/>
         <Button Content="Make Admin" IsEnabled="False" x:Name="MakeAdminButton" Click="MakeAdminButton_Click"  HorizontalAlignment="Left" Margin="210,151,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Content="Make User" IsEnabled="False" x:Name="MakeUserButton" Click="MakeUserButton_Click" HorizontalAlignment="Left" Margin="315,151,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="{Binding Path=Counter}" HorizontalAlignment="Left" Margin="184,267,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
