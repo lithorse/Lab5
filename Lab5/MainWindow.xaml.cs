@@ -65,7 +65,6 @@ namespace Lab5
             var nameRaw = NameTextBox.Text.ToLower().Trim();
             var email = EmailTextBox.Text.ToLower().Trim();
 
-
             TextInfo nameTitle = new CultureInfo("sv-SE", false).TextInfo;
 
             var name = nameTitle.ToTitleCase(nameRaw);
@@ -84,16 +83,36 @@ namespace Lab5
         {
             if (UsersListBox.SelectedIndex != -1)
             {
-                UsersListBox.Items[UsersListBox.SelectedIndex] = new User(NameTextBox.Text, EmailTextBox.Text);
+                var nameRaw = NameTextBox.Text.ToLower().Trim();
+                var email = EmailTextBox.Text.ToLower().Trim();
+
+                TextInfo nameTitle = new CultureInfo("sv-SE", false).TextInfo;
+
+                var name = nameTitle.ToTitleCase(nameRaw);
+
+                if (ValidUserInput(name, email))
+                {
+                    int index = UsersListBox.SelectedIndex;
+                    UsersListBox.Items[index] = new User(name, email);
+                    UsersListBox.SelectedIndex = index;
+                }
             }
             else
             {
-                AdminsListBox.Items[AdminsListBox.SelectedIndex] = new User(NameTextBox.Text, EmailTextBox.Text);
+                var nameRaw = NameTextBox.Text.ToLower().Trim();
+                var email = EmailTextBox.Text.ToLower().Trim();
+
+                TextInfo nameTitle = new CultureInfo("sv-SE", false).TextInfo;
+
+                var name = nameTitle.ToTitleCase(nameRaw);
+
+                if (ValidUserInput(name, email))
+                {
+                    int index = AdminsListBox.SelectedIndex;
+                    AdminsListBox.Items[index] = new User(name, email);
+                    AdminsListBox.SelectedIndex = index;
+                }
             }
-            RemoveButton.IsEnabled = false;
-            MakeUserButton.IsEnabled = false;
-            MakeAdminButton.IsEnabled = false;
-            EditButton.IsEnabled = false;
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
@@ -188,24 +207,6 @@ namespace Lab5
             }
         }
 
-        private void NameTextBox_GotMouseCapture(object sender, MouseEventArgs e)
-        {
-            if (NameTextBox.Text == "Name")
-            {
-                NameTextBox.Text = "";
-            }
-            NameTextBox.SelectAll();
-        }
-
-        private void EmailTextBox_GotMouseCapture(object sender, MouseEventArgs e)
-        {
-            if (EmailTextBox.Text == "Email")
-            {
-                EmailTextBox.Text = "";
-            }
-            EmailTextBox.SelectAll();
-        }
-
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
             UsersListBox.Items.Add(new User("Otto", "otto.r@protonmail.ch"));
@@ -229,15 +230,35 @@ namespace Lab5
                 }
                 else
                 {
-                    MessageBox.Show("Please enter a valid email address.");
-                    return false;
+                    if (string.IsNullOrEmpty(email))
+                    {
+                        MessageBox.Show("Please enter a valid email address." + Environment.NewLine + "- Empty entries not allowed");
+                        return false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please enter a valid email address." + Environment.NewLine + "- Ex: Name@mail.com");
+                        return false;
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Please enter a valid name.");
-
-                return false;
+                if (!matchName.Success)
+                {
+                    MessageBox.Show("Please enter a valid name." + Environment.NewLine + "- Illegal character used" + Environment.NewLine + "No numbers or special characters allowed.");
+                    return false;
+                }
+                else if (name == "Name")
+                {
+                    MessageBox.Show("Please enter a valid name." + Environment.NewLine + "Name cannot be \"Name\"");
+                    return false;
+                }
+                else
+                {
+                    MessageBox.Show("No empty entries allowed");
+                    return false;
+                }
             }
         }
     }
